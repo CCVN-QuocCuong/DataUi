@@ -1,0 +1,140 @@
+.export-lab-file-wrapper {
+    position: absolute;
+    top: -5000px;
+    left: -1000px;
+}
+
+.export-lab-file-wrapper .lab-file-pdf-wrapper {
+    width: 225mm;
+    padding: 10mm 5mm;
+}
+
+.lab-file-pdf-wrapper h2 {
+    font-size: 28px;
+    line-height: 60px;
+}
+
+.lab-file-pdf-wrapper .logo {
+    margin-bottom: 1rem;
+    width: 82%;
+}
+
+.lab-file-pdf-wrapper .table-infomation {
+    border: 1px solid #208DBD;
+    border-collapse: collapse;
+    margin-bottom: 0;
+}
+
+.lab-file-pdf-wrapper .table-infomation thead tr th {
+    background-color: #208DBD;
+    border-bottom: 0;
+    font-size: 1.25rem;
+    color: #fff;
+    z-index: 9;
+    position: relative;
+}
+
+.lab-file-pdf-wrapper .table-infomation thead tr th::before {
+    content: "";
+    background-color: #208DBD !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+}
+
+.lab-file-pdf-wrapper .table-infomation thead tr th span {
+    position: relative;
+    z-index: 10;
+}
+
+.lab-file-pdf-wrapper .table-infomation th {
+    font-family: "Europa", sans-serif;
+    padding: 0.25rem 0.75rem;
+}
+
+.coc-pdf-wrapper .table-infomation tbody {
+    border-top: none !important;
+}
+
+.lab-file-pdf-wrapper .table-infomation td {
+    font-family: "Europa", sans-serif;
+    border: 1px solid #208DBD !important;
+    color: #000;
+    padding: 0.25rem;
+}
+
+.lab-file-pdf-wrapper .table-infomation td:first-child {
+    width: 10rem;
+}
+
+.lab-file-pdf-wrapper .table-infomation tr.item-info td:first-child {
+    background-color: #CEDFEB;
+    z-index: 1;
+}
+
+.lab-file-pdf-wrapper .table-infomation tr.address td {
+    height: 100px;
+}
+
+.lab-file-pdf-wrapper .table-infomation tr.addtional td {
+    height: 50px;
+}
+
+.lab-file-pdf-wrapper .table-sample {
+    margin-top: 1.5rem;
+    border: 1px solid #208DBD;
+    border-collapse: collapse;
+}
+
+.lab-file-pdf-wrapper .table-sample tbody {
+    border-top: none;
+}
+
+.lab-file-pdf-wrapper .table-sample tbody td,
+.lab-file-pdf-wrapper .table-sample thead th {
+    font-family: "Europa", sans-serif;
+    border: 1px solid #208DBD !important;
+    color: #000;
+    padding: 0.25rem;
+}
+
+.lab-file-pdf-wrapper .assign-text {
+    display: block;
+    width: 200px;
+    color: #3b7ddd;
+    text-overflow: clip !important;
+    white-space: break-spaces !important;
+    word-break: break-word !important;
+    line-height: 1.2 !important;
+}
+
+.lab-file-pdf-wrapper .sample-no {
+    width: 40px;
+}
+
+.lab-file-pdf-wrapper .sample-name {
+    width: 23%;
+}
+
+.lab-file-pdf-wrapper .sample-container-type {
+    width: 14%;
+}
+
+.lab-file-pdf-wrapper .sample-datetime {
+    width: 13%;
+}
+
+.lab-file-pdf-wrapper .sample-type {
+    width: 15%;
+}
+
+.lab-file-pdf-wrapper .sample-barcode {
+    width: 15%;
+}
+
+.lab-file-pdf-wrapper .sample-test {
+    width: calc(20% - 40px);
+}

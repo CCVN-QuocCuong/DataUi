@@ -1,0 +1,137 @@
+.report-parameters-wrapper .form-label {
+    width: 150px;
+    display: inline-block;
+    text-align: right;
+    margin-right: 15px;
+}
+
+.report-parameters-wrapper .group-field {
+    margin-top: 20px;
+    padding: 15px 0 10px;
+    border: 1px solid #e1e1e1;
+    position: relative;
+}
+
+.report-parameters-wrapper .group-field.group-field-right {
+    margin-top: 93px;
+}
+
+.report-parameters-wrapper .form-item {
+    padding: 0 5px;
+}
+
+.report-parameters-wrapper .group-field .group-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    display: inline-block;
+    background-color: #fff;
+    padding: 0 5px;
+    color: #999;
+}
+
+.report-parameters-wrapper .list-criterias {
+    margin-top: 15px;
+}
+
+.report-parameters-wrapper .list-criterias .form-check {
+    margin-top: 5px;
+    padding: 0;
+}
+
+.report-parameters-wrapper .list-criterias .form-item {
+    margin: 0;
+    padding: 5px;
+}
+
+.report-parameters-wrapper .list-criterias .form-item.checked {
+    background-color: #42B0F5;
+}
+
+.report-parameters-wrapper .form-check {
+    position: relative;
+}
+
+.report-parameters-wrapper .form-check .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: inline-block;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 1px solid #333;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.report-parameters-wrapper .form-check .checkmark i {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.report-parameters-wrapper .form-check-input {
+    opacity: 0;
+    position: relative;
+    z-index: 3;
+}
+
+.report-parameters-wrapper .form-check-input:checked+.checkmark i {
+    opacity: 1;
+    visibility: visible;
+}
+
+.report-parameters-wrapper .form-check-input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    float: left;
+    position: relative;
+}
+
+.report-parameters-wrapper .form-check-label {
+    line-height: 20px;
+    margin-left: 30px;
+    display: block;
+    float: none;
+}
+
+.report-parameters-wrapper .form-select,
+.report-parameters-wrapper .form-control {
+    width: 100%;
+    max-width: 300px;
+    display: inline-block;
+}
+
+.report-parameters-wrapper .form-control#header {
+    max-width: calc(100% - 165px);
+}
+
+.report-parameters-wrapper .list-criterias .list-title {
+    float: left;
+    width: 150px;
+}
+
+.report-parameters-wrapper .list-criterias .list-content {
+    margin-left: 170px;
+}
+
+.report-parameters-wrapper .button-group {
+    margin-top: 25px;
+}
+
+.report-parameters-wrapper .loading-icon {
+    text-align: center;
+}
+
+.report-parameters-wrapper .criteria-icon img {
+    width: 30px;
+}
+
+.report-parameters-wrapper .list-criterias select {
+    display: inline-block;
+    width: calc(100% - 55px);
+    margin-left: 10px;
+}

@@ -1,0 +1,144 @@
+.forgotpw-page {
+  /* margin: 0.93% 19.86% 0.93% 19.86%; */
+  margin          : 10% auto;
+  background-color: #FFFFFF;
+  max-width       : 1062px;
+  height          : 80%;
+  font-style      : normal;
+  /* font-weight  : 700; */
+}
+
+.forgotpw-page a {
+  color: #BD202D;
+}
+
+.forgotpw-page input {
+  font-size: 13px;
+}
+
+.forgotpw-header {
+  max-width     : 271px;
+  height        : 40px;
+  display       : inline-flex;
+  margin        : 0.65% 37.24%;
+  margin-top    : 6%;
+  font-size     : 34px;
+  line-height   : 40px;
+  letter-spacing: 0.25px;
+  color         : #333333;
+  flex          : none;
+  order         : 0;
+  flex-grow     : 0;
+  font-weight   : 700;
+}
+
+.forgotpw-form {
+  margin-bottom: 25%;
+}
+
+.form-group-input {
+  width     : 624px;
+  height    : 44px;
+  background: #FFFFFF;
+  border    : 1px solid #999999;
+}
+
+.form-group-label {
+  font-weight: 700;
+  color      : #4C4C4C;
+}
+
+.form-group-message {
+  font-weight   : 400;
+  font-size     : 16px;
+  line-height   : 24px;
+  /* identical to box height, or 150% */
+  letter-spacing: -0.01em;
+  /* Light/Base.Gray/40 */
+  color         : #999999;
+}
+
+.form-btn-danger {
+  margin-right: 10px;
+  cursor      : pointer;
+  width       : 136px;
+  height      : 44px;
+  background  : white;
+  border      : 1px solid #BD202D;
+  color       : #BD202D;
+}
+
+.form-btn-danger:hover {
+  background: #BD202D;
+  color     : white;
+}
+
+.form-btn {
+  margin-right: 10px;
+  color       : #BD202D;
+  cursor      : pointer;
+  width       : 136px;
+  height      : 44px;
+  background  : #FFFFFF;
+  border      : 1px solid #BD202D;
+}
+
+.forgotpw-form-header {
+  font-style    : normal;
+  font-weight   : 700;
+  font-size     : 16px;
+  line-height   : 24px;
+  /* identical to box height, or 120% */
+  letter-spacing: 0.0015em;
+
+  /* Light/Base.Gray/80 */
+
+  color: #333333;
+}
+
+.forgotpw-success-title {
+  font-style : normal;
+  font-weight: 700;
+  font-size  : 26px;
+  line-height: 32px;
+  /* Light/Base.Gray/80 */
+
+  color: #333333;
+}
+
+
+.forgotpw-success-text {
+  font-style : normal;
+  font-weight: 400;
+  font-size  : 16px;
+  line-height: 12px;
+  /* or 150% */
+
+  text-align    : center;
+  letter-spacing: -0.01em;
+
+  /* Light/Base.Gray/50 */
+
+  color: #808080;
+}
+
+.helper-text {
+  font-style : normal;
+  font-weight: 400;
+  font-size  : 13px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  letter-spacing: -0.01em;
+
+  /* Light/Base.Gray/40 */
+  flex     : none;
+  order    : 2;
+  flex-grow: 0;
+  margin   : 4px 0px;
+  color    : #999999;
+}
+
+.forgotpw-page .invalid-feedback {
+  font-size: 13px;
+}

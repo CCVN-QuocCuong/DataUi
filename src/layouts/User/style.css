@@ -1,0 +1,132 @@
+nav#sidebar {
+    background: #333333 !important;
+}
+
+.sidebar-blur {
+    z-index: 100;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(52, 52, 52, 0.5);
+}
+
+.sidebar,
+.sidebar-content {
+    background: #333333 !important;
+}
+
+a.sidebar-link {
+    background: #333333 !important;
+}
+
+li.active>a.sidebar-link {
+    background: #3f4046 !important;
+}
+
+.navbar {
+    box-shadow: none !important;
+}
+
+.border-content {
+    border: 1px solid #b3b3b363 !important;
+    border-radius: 10px;
+}
+
+main.content {
+    padding: 0 1rem 0.75rem !important;
+}
+
+main.content-fluid {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+h4.admin-breadcum {
+    padding: 0rem 1.5rem 0rem !important;
+    color: #495057;
+}
+
+h4.admin-breadcum a {
+    color: #4C4C4C;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+#alertsDropdown svg {
+    height: 30px !important;
+    width: 30px !important;
+}
+
+.sidebar-nav {
+    margin-top: 30px;
+}
+
+.sidebar-nav .nav-link {
+    color: rgba(233, 236, 239, 0.5);
+}
+
+.sidebar-nav .nav-link {
+    padding: 0.625rem 1.625rem;
+}
+
+#nav-dropdown-notification::after {
+    display: none !important;
+}
+
+.item-notification .dropdown-menu {
+    width: 250px;
+    padding: 0;
+    border-radius: 8px;
+}
+
+.item-notification .dropdown-item {
+    white-space: break-spaces;
+}
+
+.item-notification .dropdown-item .notification-message {
+    display: block;
+}
+
+.item-notification .dropdown-item .notification-datetime {
+    display: block;
+    font-size: 0.75rem;
+    color: #a1a1a1;
+}
+
+.item-notification .dropdown-title {
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    padding: 5px 10px;
+
+}
+
+.item-notification .notification-filter {
+    border-bottom: 1px solid #999;
+    padding: 0 10px;
+}
+
+.item-notification .notification-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.item-notification .notification-content::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.item-notification .notification-content::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+.item-notification .notification-content::-webkit-scrollbar-thumb {
+    background-color: #999;
+    border-radius: 5px;
+    border: 3px solid #999;
+}

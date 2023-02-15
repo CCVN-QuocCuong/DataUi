@@ -1,0 +1,15 @@
+.lab-file-form-wrapper .button-group {
+    text-align: right;
+}
+
+.lab-file-form-wrapper .button-group button {
+    margin: 1rem 1rem 1rem 0;
+}
+
+.lab-file-form-wrapper .button-group button:last-child {
+    margin-right: 0;
+}
+
+.lab-file-form-wrapper .loading-icon {
+    text-align: center;
+}

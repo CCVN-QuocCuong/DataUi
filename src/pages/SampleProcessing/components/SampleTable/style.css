@@ -1,0 +1,30 @@
+.button-process-samples {
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+
+.sample-table-wrapper>div {
+    max-height: unset !important;
+}
+
+.sample-table-wrapper .rdt_Table .rdt_TableCell {
+    cursor: pointer;
+}
+
+.assign-text {
+    color: #3b7ddd;
+    transition: all .3s;
+    cursor: pointer;
+    word-break: unset !important;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    display: block;
+    line-height: 48px;
+    width: 100%;
+}
+
+.assign-text:hover {
+    color: #2f64b1;
+    text-decoration: underline;
+}

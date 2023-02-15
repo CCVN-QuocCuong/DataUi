@@ -1,0 +1,36 @@
+.coc-files-pdf-table-wrapper .button-group button {
+    margin: 0 1rem 0 0;
+}
+
+.coc-files-pdf-table-wrapper .button-group button:last-child {
+    margin-right: 0;
+}
+
+.coc-files-pdf-table-wrapper .button-group .button-right {
+    float: right;
+}
+
+.coc-files-pdf-table-wrapper .button-group {
+    margin-top: 2rem;
+}
+
+.coc-files-pdf-table-wrapper .hidden {
+    display: none;
+}
+
+.coc-files-pdf-table-wrapper .filename {
+    color: royalblue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.coc-files-pdf-table-wrapper .button-group.group-row {
+    margin: 0;
+    padding: 0;
+}
+
+.coc-files-pdf-table-wrapper .button-group.group-row .btn {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    padding: 5px 10px;
+}

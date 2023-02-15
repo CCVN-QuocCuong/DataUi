@@ -1,0 +1,16 @@
+.button-process-samples {
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+
+.coc-table-wrapper > div {
+    max-height: unset !important;
+}
+
+.coc-table-wrapper .rdt_Table .rdt_TableCell {
+    cursor: pointer;
+}
+
+.coc-table-wrapper .text-priority {
+    text-transform: capitalize;
+}

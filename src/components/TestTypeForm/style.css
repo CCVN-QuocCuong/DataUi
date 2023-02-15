@@ -1,0 +1,19 @@
+.test-type-form-wrapper .form-item {
+    margin-bottom: 1rem;
+}
+
+.test-type-form-wrapper .button-group {
+    text-align: right;
+}
+
+.button-group button {
+    margin: 0 1rem 1rem 0;
+}
+
+.button-group button:last-child {
+    margin-right: 0;
+}
+
+.text-center {
+    text-align: center;
+}

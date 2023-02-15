@@ -1,0 +1,51 @@
+.login-form .contain-remember-forgot {
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-form .remember-me {
+  color: #808080;
+}
+
+.login-form .forgot-password {
+  color: #808080;
+  cursor: pointer;
+}
+
+.form-check {
+  position: relative;
+  display: block;
+  padding-left: 1.25rem;
+}
+
+.form-check .form-check-input {
+  float: left;
+  position: absolute;
+  margin-left: -1.5em;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+
+.center_form {
+  margin: 0 auto;
+  width: 80%
+    /* value of your choice which suits your alignment */
+}
+
+.login-error p {
+  line-height: 10px;
+}
+
+.invalid-feedback {
+  font-size: 100% !important;
+}
+
+.btn-change-pass .spinner-border {
+  --bs-spinner-width: 1.2rem;
+  --bs-spinner-height: 1.2rem;
+}

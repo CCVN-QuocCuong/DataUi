@@ -1,0 +1,25 @@
+.button-group button {
+    margin: 0 1rem 1rem 0;
+}
+
+.button-group button:last-child {
+    margin-right: 0;
+}
+
+.assign-text {
+    color: #3b7ddd;
+    transition: all .3s;
+    cursor: pointer;
+    word-break: unset !important;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    display: block;
+    line-height: 48px;
+    width: 100%;
+}
+
+.assign-text:hover {
+    color: #2f64b1;
+    text-decoration: underline;
+}

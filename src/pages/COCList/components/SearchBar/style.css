@@ -1,0 +1,39 @@
+.margin {
+    margin-top: 2rem;
+}
+
+.margin-button {
+    margin-right: 1rem;
+}
+
+.dropdown-height {
+    height: 38px;
+}
+
+.search-bar-wrapper {
+    z-index: 2;
+}
+
+.react-datepicker-popper {
+    z-index: 4 !important;
+}
+
+.search-bar-wrapper .form-control {
+    min-height: 38px;
+}
+
+.search-bar-wrapper .form-item {
+    margin-bottom: 1rem;
+}
+
+.search-bar-wrapper .form-item p {
+    margin-bottom: 0.5rem;
+}
+
+.search-bar-wrapper .form-select {
+    min-height: 38px;
+}
+
+.text-right {
+    text-align: right;
+}

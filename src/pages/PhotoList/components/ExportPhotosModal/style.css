@@ -1,0 +1,25 @@
+.form-export-container .loading-icon {
+    text-align: center;
+    padding: 2rem;
+}
+
+.form-export-container .photo-thumbnail {
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.form-export-container .form-item {
+    margin-bottom: 2rem;
+}
+
+.form-export-container .ck.ck-editor__main>.ck-editor__editable {
+    height: 100px;
+}
+
+.export-photos-wrapper {
+    display: none;
+}

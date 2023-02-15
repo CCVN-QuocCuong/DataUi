@@ -1,0 +1,56 @@
+.button-process-samples {
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+
+.sample-table-wrapper>div {
+    max-height: unset !important;
+}
+
+.sample-table-wrapper .rdt_Table .rdt_TableCell {
+    cursor: pointer;
+}
+
+.assign-text {
+    color: #3b7ddd;
+    transition: all .3s;
+    cursor: pointer;
+    word-break: unset !important;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    display: block;
+    line-height: 48px;
+    width: 100%;
+}
+
+.assign-text:hover {
+    color: #2f64b1;
+    text-decoration: underline;
+}
+
+.add-sample-wrapper .sample-table-wrapper>div {
+    overflow-x: auto;
+}
+
+.add-sample-wrapper .rdt_Table {
+    max-height: calc(90vh - 320px);
+    overflow: auto;
+}
+
+.add-sample-wrapper .rdt_Pagination {
+    margin-bottom: 0;
+}
+
+.sample-table-wrapper .rdt_TableBody {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sample-table-wrapper .rdt_TableRow {
+    min-height: fit-content;
+}
+
+.sample-table-wrapper .rdt_TableCell {
+    min-height: 48px;
+}

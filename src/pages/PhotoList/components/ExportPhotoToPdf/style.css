@@ -1,0 +1,49 @@
+.photo-pdf-wrapper .photo {
+    text-align: center;
+}
+
+.photo-pdf-wrapper .photo img {
+    max-width: 100%;
+    height: auto;
+    max-height: 200mm;
+}
+
+.photo-pdf-wrapper .description {
+    font-size: 16px;
+    margin: 10px 0 15px;
+    color: #000;
+}
+
+.photo-pdf-wrapper .report-title {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #000;
+}
+
+.photo-pdf-wrapper .photo-row {
+    page-break-inside: avoid;
+}
+
+.photo-pdf-wrapper .photo.item-2 {
+    width: 50%;
+}
+
+.photo-pdf-wrapper .photo.item-1 {
+    page-break-inside: avoid;
+}
+
+@media print {
+
+    html,
+    body {
+        height: initial !important;
+        overflow: initial !important;
+        -webkit-print-color-adjust: exact;
+    }
+
+    @page {
+        size: auto;
+        margin: 15mm 10mm;
+    }
+
+}

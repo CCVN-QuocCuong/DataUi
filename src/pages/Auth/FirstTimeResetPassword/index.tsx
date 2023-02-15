@@ -1,0 +1,1 @@
+export { FirstTimeResetPassword as default } from './FirstTimeResetPassword'

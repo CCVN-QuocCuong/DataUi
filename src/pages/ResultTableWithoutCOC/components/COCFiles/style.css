@@ -1,0 +1,34 @@
+.lab-files-table-wrapper .button-group {
+    padding: 0;
+}
+
+.lab-files-table-wrapper .button-group button {
+    margin: 0 1rem 0 0;
+}
+
+.lab-files-table-wrapper .button-group.group-row button {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+}
+
+.lab-files-table-wrapper .button-group button:last-child {
+    margin-right: 0;
+}
+
+.lab-files-table-wrapper .button-group .button-right {
+    float: right;
+}
+
+.lab-files-table-wrapper .button-group {
+    margin-top: 0;
+}
+
+.lab-files-table-wrapper .hidden {
+    display: none;
+}
+
+.lab-files-table-wrapper .filename {
+    color: royalblue;
+    text-decoration: underline;
+    cursor: pointer;
+}

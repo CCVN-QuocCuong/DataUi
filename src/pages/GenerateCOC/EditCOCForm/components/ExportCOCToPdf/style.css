@@ -1,0 +1,135 @@
+.export-coc-wrapper {
+    position: absolute;
+    top: -5000px;
+    left: -1000px;
+}
+
+.export-coc-wrapper .coc-pdf-wrapper {
+    width: 225mm;
+    padding: 10mm 5mm;
+}
+
+.coc-pdf-wrapper .logo {
+    margin-bottom: 1rem;
+    width: 82%;
+}
+
+.coc-pdf-wrapper .table-infomation {
+    border: 1px solid #208DBD;
+    border-collapse: collapse;
+    margin-bottom: 0;
+}
+
+.coc-pdf-wrapper .table-infomation thead tr th {
+    font-family: "Europa", sans-serif;
+    background-color: #208DBD;
+    border-bottom: 0;
+    font-size: 1.25rem;
+    color: #fff;
+    z-index: 9;
+    position: relative;
+
+}
+
+.coc-pdf-wrapper .table-infomation thead tr th::before {
+    content: "";
+    background-color: #208DBD !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+}
+
+.coc-pdf-wrapper .table-infomation thead tr th span {
+    position: relative;
+    z-index: 10;
+}
+
+.coc-pdf-wrapper .table-infomation th {
+    padding: 0.25rem 0.75rem;
+}
+
+.coc-pdf-wrapper .table-infomation tbody {
+    border-top: none !important;
+}
+
+.coc-pdf-wrapper .table-infomation td {
+    font-family: "Europa", sans-serif;
+    border: 1px solid #208DBD !important;
+    color: #000;
+    padding: 0.25rem;
+}
+
+.coc-pdf-wrapper .table-infomation td:first-child {
+    width: 10rem;
+}
+
+.coc-pdf-wrapper .table-infomation tr.item-info td:first-child {
+    background-color: #CEDFEB;
+    z-index: 1;
+}
+
+.coc-pdf-wrapper .table-infomation tr.address td {
+    height: 100px;
+}
+
+.coc-pdf-wrapper .table-infomation tr.addtional td {
+    height: 50px;
+}
+
+.coc-pdf-wrapper .table-sample {
+    margin-top: 1.5rem;
+    border: 1px solid #208DBD;
+    border-collapse: collapse;
+}
+
+.coc-pdf-wrapper .table-sample tbody {
+    border-top: none;
+}
+
+.coc-pdf-wrapper .table-sample tbody td,
+.coc-pdf-wrapper .table-sample thead th {
+    font-family: "Europa", sans-serif;
+    border: 1px solid #208DBD !important;
+    color: #000;
+    padding: 0.25rem;
+}
+
+.coc-pdf-wrapper .assign-text {
+    display: block;
+    color: #3b7ddd;
+    text-overflow: clip !important;
+    white-space: break-spaces !important;
+    word-break: break-word !important;
+    line-height: 1.2 !important;
+}
+
+.coc-pdf-wrapper .sample-no {
+    width: 40px;
+}
+
+.coc-pdf-wrapper .sample-name {
+    width: 20%;
+}
+
+.coc-pdf-wrapper .sample-container-type {
+    width: 12%;
+}
+
+.coc-pdf-wrapper .sample-datetime {
+    width: 13%;
+}
+
+.coc-pdf-wrapper .sample-type {
+    width: 12%;
+}
+
+.coc-pdf-wrapper .sample-barcode {
+    width: 14%;
+}
+
+.coc-pdf-wrapper .sample-test {
+    width: calc(30% - 40px);
+}

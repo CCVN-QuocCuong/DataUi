@@ -1,0 +1,36 @@
+@font-face {
+    font-family: "Europa-Bold";
+    src: url("assets/font/Europa-Bold.eot");
+    src: url("assets/font/Europa-Bold.eot?#iefix") format("embedded-opentype"),
+        url("assets/font/Europa-Bold.woff2") format("woff2"),
+        url("assets/font/Europa-Bold.woff") format("woff"),
+        url("assets/font/Europa-Bold.ttf") format("truetype"),
+        url("assets/font/Europa-Bold.svg#Europa-Bold") format("svg");
+}
+
+@font-face {
+    font-family: "Europa";
+    src: url("assets/font/Europa.eot");
+    src: url("assets/font/Europa.eot?#iefix") format("embedded-opentype"),
+        url("assets/font/Europa.woff2") format("woff2"),
+        url("assets/font/Europa.woff") format("woff"),
+        url("assets/font/Europa.ttf") format("truetype"),
+        url("assets/font/Europa.svg#Europa") format("svg");
+}
+
+body {
+    font-family: Europa !important;
+}
+
+.modal .modal-content {
+    max-height: calc(100vh - 3.5rem);
+}
+
+.modal .modal-body {
+    max-height: 100%;
+    overflow: auto;
+}
+
+select option:disabled {
+    color: #a1a1a1;
+}

@@ -1,0 +1,1 @@
+export { MyAccount as default } from './MyAccount'

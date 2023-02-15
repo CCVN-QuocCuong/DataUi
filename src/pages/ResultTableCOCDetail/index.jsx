@@ -1,0 +1,1 @@
+export { ResultTableCOCDetail as default } from "./ResultTableCOCDetail";

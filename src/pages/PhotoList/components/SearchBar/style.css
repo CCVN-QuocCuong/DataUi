@@ -1,0 +1,65 @@
+.margin {
+    margin-top: 2rem;
+}
+
+.margin-button {
+    margin-right: 1rem;
+}
+
+.dropdown-height {
+    height: 38px;
+}
+
+.search-bar-wrapper {
+    z-index: 2;
+}
+
+.react-datepicker-popper {
+    z-index: 4 !important;
+}
+
+.search-bar-wrapper .form-control {
+    min-height: 38px;
+}
+
+.search-bar-wrapper .form-item {
+    margin-bottom: 1rem;
+}
+
+.search-bar-wrapper .form-item p {
+    margin-bottom: 0.5rem;
+}
+
+.search-bar-wrapper .form-select {
+    min-height: 38px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.dropdown-container .dropdown-content {
+    z-index: 999;
+}
+
+.search-bar-wrapper .form-wrapper {
+    width: calc(100% - 200px);
+}
+
+.search-bar-wrapper .button-search-group {
+    width: 200px;
+    text-align: right;
+    margin-top: 30px;
+}
+
+.search-bar-wrapper .form-container {
+    display: flex;
+}
+
+.search-bar-wrapper .hidden {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+}

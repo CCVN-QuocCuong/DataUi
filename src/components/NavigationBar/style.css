@@ -1,0 +1,21 @@
+ul.submenu {
+    height: 0;
+    overflow: hidden;
+    transition: all .3s;
+    list-style: none;
+    padding: 0;
+    margin-left: 1rem;
+}
+
+ul.submenu.show-menu {
+    height: auto;
+}
+
+.sidebar-item .dropdown-toggle {
+    background-color: transparent;
+}
+
+.sidebar-item .dropdown-toggle span {
+    display: inline-block;
+    width: calc(100% - 15px);
+}

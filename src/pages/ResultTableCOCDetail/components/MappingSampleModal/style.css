@@ -1,0 +1,19 @@
+.mapping-sample-wrapper select {
+    display: inline-block;
+    width: calc(100% - 55px);
+    margin-left: 10px;
+}
+
+.mapping-sample-wrapper label {
+    width: 100%;
+    margin-bottom: 0;
+    line-height: 34px;
+}
+
+.mapping-sample-wrapper .form-item {
+    margin-bottom: 1rem;
+}
+
+.mapping-sample-wrapper .button-group {
+    margin-top: 2rem;
+}
