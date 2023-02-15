@@ -1,4 +1,11 @@
-import { REACT_APP_COGNITO_CLIENT_ID, REACT_APP_COGNITO_DOMAIN, REACT_APP_COGNITO_REGION, REACT_APP_COGNITO_USERPOOL_ID } from "constants/awsConfig";
+// import { REACT_APP_COGNITO_CLIENT_ID, REACT_APP_COGNITO_DOMAIN, REACT_APP_COGNITO_REGION, REACT_APP_COGNITO_USERPOOL_ID } from "constants/awsConfig";
+
+const REACT_APP_COGNITO_REGION ='ap-southeast-2'
+const REACT_APP_COGNITO_USERPOOL_ID ='ap-southeast-2_qGKtzMu7T'
+const REACT_APP_COGNITO_IDENTITYPOOL_ID ='ap-southeast-2:71b14ef7-743d-4ebb-8041-6e7dbdcc6f92'
+const REACT_APP_COGNITO_CLIENT_ID ='2c3l1rtl0nl4do3dv39ai8iktl'
+const REACT_APP_COGNITO_DOMAIN ='dataui-test.auth.ap-southeast-2.amazoncognito.com'
+
 
 /**
  * Config login by AzureID
