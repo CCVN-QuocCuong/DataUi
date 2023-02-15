@@ -31,7 +31,11 @@ export function Login() {
      * @param {Object} data
      */
     async function setAccessToken(data) {
+        console.log('setAccessToken:', data);
+        
         await Auth.currentSession().then(res => {
+            console.log('setAccessToken res:', res);
+
             localStorage.setItem("user", JSON.stringify({ username: data.username }));
             let token = res.getIdToken().getJwtToken();
             let refreshToken = res.getRefreshToken().getToken();
