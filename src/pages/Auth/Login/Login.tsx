@@ -45,9 +45,7 @@ export function Login() {
         const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
             switch (event) {
                 case "signIn":
-                    setTimeout(() => {
-                        setAccessToken(data)
-                    }, 1000);
+                    setAccessToken(data)
                     break
             }
         })
