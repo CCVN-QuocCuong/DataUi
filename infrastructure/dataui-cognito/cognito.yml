@@ -1,0 +1,237 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create Cognito for Development enviroment
+Parameters:
+  Application:
+    Description: application name
+    Type: String
+    Default: daa 
+  Costcenter:
+    Description: cost center
+    Type: String
+    Default: ''
+  Platform:
+    Description: platform name
+    Type: String
+    Default: aws      
+  Project:
+    Description: Project Name
+    Type: String
+    Default: dataui
+  Environment:
+    Description: Deployment environment
+    Type: String
+    Default: test 
+
+Resources:
+  # S3 bucket application
+  S3BucketApplication:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 
+            - ${Project}-${Environment}-application-bucket
+            - {Project: !Ref Project, EnvironmentId: !Ref Environment}
+      PublicAccessBlockConfiguration:
+            BlockPublicAcls : true
+            BlockPublicPolicy : true
+            IgnorePublicAcls : true
+            RestrictPublicBuckets : true
+      Tags:
+          - Key: "Name"
+            Value: !Sub 
+            - ${Project}-${Environment}-application-bucket
+            - {Project: !Ref Project, EnvironmentId: !Ref Environment}
+          - Key: "environment"
+            Value: !Sub
+            - ${Environment}
+            - {EnvironmentId: !Ref Environment}
+          - Key: "application"
+            Value: !Sub
+            - ${Application}
+            - {Application: !Ref Application} 
+          - Key: "costcenter"
+            Value: !Sub
+            - ${Costcenter}
+            - {Costcenter: !Ref Costcenter} 
+          - Key: "platform"
+            Value: !Sub
+            - ${Platform}
+            - {Platform: !Ref Platform} 
+
+  # Cognito for user
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Sub 
+        - ${Project}-${Environment}-user-pool
+        - {Project: !Ref Project, EnvironmentId: !Ref Environment} 
+      UsernameAttributes: 
+        - email 
+      UsernameConfiguration:
+        CaseSensitive: true
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireLowercase: false
+          RequireNumbers: true
+          RequireSymbols: false
+          RequireUppercase: true
+      AutoVerifiedAttributes: 
+        - email
+
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName:  !Sub 
+        - ${Project}-${Environment}-user-pool-client
+        - {Project: !Ref Project, EnvironmentId: !Ref Environment}
+      GenerateSecret: false
+      UserPoolId: !Ref UserPool
+      ExplicitAuthFlows:
+        - ADMIN_NO_SRP_AUTH 
+
+  # Creates a federeated Identity pool
+  IdentityPool:
+    Type: "AWS::Cognito::IdentityPool"
+    Properties:
+      IdentityPoolName: !Sub 
+        - ${Project}-${Environment}-identity-pool
+        - {Project: !Ref Project, EnvironmentId: !Ref Environment}
+      AllowUnauthenticatedIdentities: true
+      CognitoIdentityProviders: 
+        - ClientId: !Ref UserPoolClient
+          ProviderName: !GetAtt UserPool.ProviderName
+
+  # Create a role for unauthorized acces to AWS resources. Very limited access. Only allows users in the previously created Identity Pool
+  CognitoUnAuthorizedRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal: 
+              Federated: "cognito-identity.amazonaws.com"
+            Action: 
+              - "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals: 
+                "cognito-identity.amazonaws.com:aud": !Ref IdentityPool
+              "ForAnyValue:StringLike":
+                "cognito-identity.amazonaws.com:amr": unauthenticated
+      Policies:
+        - PolicyName: "CognitoUnauthorizedPolicy"
+          PolicyDocument: 
+            Statement:
+              - Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                Resource:
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket/public/*
+                Effect: Allow
+              - Action:
+                  - s3:PutObject
+                Resource:
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket/uploads/*
+                Effect: Allow
+              - Action:
+                  - s3:GetObject
+                Resource:
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket/protected/*
+                Effect: Allow
+              - Condition:
+                  StringLike:
+                    s3:prefix:
+                      - public/
+                      - public/*
+                      - protected/
+                      - protected/*
+                Action:
+                  - s3:ListBucket
+                Resource:
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket
+                Effect: Allow
+
+  # Create a role for authorized acces to AWS resources. Control what your user can access. This example only allows Lambda invokation
+  # Only allows users in the previously created Identity Pool
+  CognitoAuthorizedRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal: 
+              Federated: "cognito-identity.amazonaws.com"
+            Action: 
+              - "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals: 
+                "cognito-identity.amazonaws.com:aud": !Ref IdentityPool
+              "ForAnyValue:StringLike":
+                "cognito-identity.amazonaws.com:amr": authenticated
+      Policies:
+        - PolicyName: "CognitoAuthorizedPolicy"
+          PolicyDocument: 
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                Resource:
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket/public/*
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket/protected/${cognito-identity.amazonaws.com:sub}/*
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket/private/${cognito-identity.amazonaws.com:sub}/*
+                Effect: Allow
+              - Action:
+                  - s3:PutObject
+                Resource:
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket/uploads/*
+                Effect: Allow
+              - Action:
+                  - s3:GetObject
+                Resource:
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket/protected/*
+                Effect: Allow
+              - Condition:
+                  StringLike:
+                    s3:prefix:
+                      - public/
+                      - public/*
+                      - protected/
+                      - protected/*
+                      - private/${cognito-identity.amazonaws.com:sub}/
+                      - private/${cognito-identity.amazonaws.com:sub}/*
+                Action:
+                  - s3:ListBucket
+                Resource:
+                  - arn:aws:s3:::${Project}-${Environment}-application-bucket
+                Effect: Allow
+  
+  # Assigns the roles to the Identity Pool
+  IdentityPoolRoleMapping:
+    Type: "AWS::Cognito::IdentityPoolRoleAttachment"
+    Properties:
+      IdentityPoolId: !Ref IdentityPool
+      Roles:
+        authenticated: !GetAtt CognitoAuthorizedRole.Arn
+        unauthenticated: !GetAtt CognitoUnAuthorizedRole.Arn
+
+Outputs:
+  S3BucketApplication:
+    Value: !Ref S3BucketApplication
+    Export:
+      Name: "S3BucketApplication::Id" 
+  UserPoolId:
+    Value: !Ref UserPool
+    Export:
+      Name: "UserPool::Id"
+  UserPoolClientId:
+    Value: !Ref UserPoolClient
+    Export:
+      Name: "UserPoolClient::Id"
+  IdentityPoolId:
+    Value: !Ref IdentityPool
+    Export:
+      Name: "IdentityPool::Id"

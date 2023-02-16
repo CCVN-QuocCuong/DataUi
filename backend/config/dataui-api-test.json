@@ -1,0 +1,26 @@
+{
+  "COGNITO_USER_POOL_ARN": "arn:aws:cognito-idp:ap-southeast-2:571944583523:userpool/ap-southeast-2_qGKtzMu7T",
+  "COGNITO_USER_POOL_ID": "ap-southeast-2_qGKtzMu7T",
+  "COGNITO_USER_CLIENT_ID": "2c3l1rtl0nl4do3dv39ai8iktl",
+  "DB_HOST": "",
+  "DB_NAME": "",
+
+  "SECRET_NAME": "",
+  
+  "DB_USERNAME": "",
+  "DB_PASSWORD": "",
+  "DB_SCHEMA": "",
+
+  "SECURITY_GROUP": "sg-05af36c6b51e82874",
+  "SECURITY_SUBNET1": "subnet-04ea70c8bab203b9a",
+  "SECURITY_SUBNET2": "subnet-0a842d8b685d4c351",
+  "SECURITY_SUBNET3": "subnet-0d1c22b10c385dcea" , 
+
+  "FLCD_ENV_EVENT_BRIDGE_RATING": 10,
+  "FLCD_ENV_LAMBDA_FUNCTION_NAME": "fldca-env-api-test-GetSurveyByInterval",
+  "FLCD_ENV_ENPOINT_DOWLOAD_FILES": "https://lcb6zz7r0b.execute-api.ap-southeast-2.amazonaws.com/test",
+  "DATAUI_FILES_STORAGE": "data-ui-test-files-storage",
+  "DATAUI_LAB_FILES_STORAGE": "data-ui-test-lab-files",
+  "HILL_LAB_TRANSFORM_ENV_LAMBDA_FUNCTION_NAME": "dataui-api-test-hilltrans-lambda-function",  
+  "ANALYTICA_API_ACCESS_TOKEN_SECRECT_NAME": "analytica_token" 
+}

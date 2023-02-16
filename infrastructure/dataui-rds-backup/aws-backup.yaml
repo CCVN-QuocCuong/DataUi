@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: "2010-09-09" 
+Description: "AWS Backup for RDS" 
+Parameters:
+  Application:
+    Description: application name
+    Type: String
+    Default: daa 
+  Costcenter:
+    Description: cost center
+    Type: String
+    Default: update
+  Platform:
+    Description: platform name
+    Type: String
+    Default: aws      
+  Project:
+    Description: Project Name
+    Type: String
+    Default: daa
+  Environment:
+    Description: Deployment environment
+    Type: String
+    Default: dev
+
+Resources:
+  BackupVault1: 
+    Type: "AWS::Backup::BackupVault" 
+    Properties: 
+      BackupVaultName: !Sub 
+        - ${Project}-${Environment}-backup-vault
+        - {Project: !Ref Project, EnvironmentId: !Ref Environment}
+  BackupPlan: 
+    Type: "AWS::Backup::BackupPlan" 
+    Properties: 
+      BackupPlan: 
+        BackupPlanName: !Sub 
+        - ${Project}-${Environment}-backup-plan
+        - {Project: !Ref Project, EnvironmentId: !Ref Environment}
+        BackupPlanRule: 
+          - RuleName: !Sub 
+            - ${Project}-${Environment}-12-hr-backup-plan
+            - {Project: !Ref Project, EnvironmentId: !Ref Environment} 
+            ScheduleExpression: "cron(0 5/12 ? * * *)" 
+            TargetBackupVault: 
+              Ref: "BackupVault1"
+
+  BackupResourceSelection1: 
+    Type: "AWS::Backup::BackupSelection" 
+    Properties: 
+      BackupPlanId: 
+        Ref: "BackupPlan" 
+      BackupSelection: 
+        SelectionName: !Sub 
+        - ${Project}-${Environment}-resource-rds-backup
+        - {Project: !Ref Project, EnvironmentId: !Ref Environment}
+        IamRoleArn: #"arn:aws:iam::571944583523:role/aws-service-role/backup.amazonaws.com/AWSServiceRoleForBackup"
+          Fn::Join:
+            - "" 
+            - 
+              - "arn:aws:iam::" 
+              - Ref: "AWS::AccountId" 
+              - ":role/aws-service-role/backup.amazonaws.com/AWSServiceRoleForBackup" 
+        Resources: 
+          - "arn:aws:rds:*:*:db:*"
+          # - "arn:aws:rds:ap-southeast-2:571944583523:db:dataui-dev-aurora-instance-multiaz-instance-1"
+Outputs:
+  BackupVault:
+    Description: The BackupVault
+    Value:
+      Ref: BackupVault1
+    Export:
+      Name: !Sub '${AWS::StackName}-BackupVault'
+
+ 

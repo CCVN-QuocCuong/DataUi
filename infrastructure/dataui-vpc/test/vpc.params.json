@@ -1,0 +1,74 @@
+[
+  {
+    "ParameterKey": "Application",
+    "ParameterValue": "dataui"
+  },
+  {
+    "ParameterKey": "Costcenter",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "Platform",
+    "ParameterValue": "aws"
+  },
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "test"
+  },
+  {
+    "ParameterKey": "Project",
+    "ParameterValue": "dataui"
+  },
+  {
+    "ParameterKey": "VpcCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "NetSubnetOneCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "NetSubnetTwoCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "NetSubnetThreeCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "DataSubnetOneCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "DataSubnetTwoCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "DataSubnetThreeCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "AppSubnetOneCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "AppSubnetTwoCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "AppSubnetThreeCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "WebSubnetOneCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "WebSubnetTwoCidr",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "WebSubnetThreeCidr",
+    "ParameterValue": ""
+  }
+]

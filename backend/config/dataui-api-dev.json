@@ -1,0 +1,27 @@
+{
+  "COGNITO_USER_POOL_ARN": "arn:aws:cognito-idp:ap-southeast-2:571944583523:userpool/ap-southeast-2_rd5aJKy6s",
+  "COGNITO_USER_POOL_ID": "ap-southeast-2_rd5aJKy6s",
+  "COGNITO_USER_CLIENT_ID": "5pfsvo30r051oviv8d9o1tlfva",
+  "DB_HOST": "dataui-dev-aurora-instance-multiaz-instance-1.czhifbj0h9mc.ap-southeast-2.rds.amazonaws.com",
+  "DB_NAME": "db_dataui_dev",
+
+  "SECRET_NAME": "dataui-dev-aurora-secrets-manager",
+  
+  "DB_USERNAME": "postgres",
+  "DB_PASSWORD": "Abcde12345-Abcde12345-",
+  "DB_SCHEMA": "public",
+
+  "SECURITY_GROUP": "sg-05af36c6b51e82874",
+  "SECURITY_SUBNET1": "subnet-04ea70c8bab203b9a",
+  "SECURITY_SUBNET2": "subnet-0a842d8b685d4c351",
+  "SECURITY_SUBNET3": "subnet-0d1c22b10c385dcea" ,
+
+  "FLCD_ENV_EVENT_BRIDGE_RATING": 10,
+  "FLCD_ENV_LAMBDA_FUNCTION_NAME": "fldca-env-api-dev-GetSurveyByInterval",
+  "FLCD_ENV_ENPOINT_DOWLOAD_FILES": "https://bk8fqhzcfa.execute-api.ap-southeast-2.amazonaws.com/dev",
+  "DATAUI_FILES_STORAGE": "data-ui-files-storage",
+  "DATAUI_LAB_FILES_STORAGE": "data-ui-lab-files", 
+  "HILL_LAB_TRANSFORM_ENV_LAMBDA_FUNCTION_NAME": "dataui-api-dev-hilltrans-lambda-function",
+
+  "ANALYTICA_API_ACCESS_TOKEN_SECRECT_NAME": "analytica_token"
+}

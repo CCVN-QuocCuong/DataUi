@@ -1,0 +1,33 @@
+analytica-api-results-lambda-function:
+  handler: src/api/ui/analytica/api_result.handler
+  description: Transformation data from extend API analytica into DataUI system
+  vpc: ~
+  layers:
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-pytz:3
+    - arn:aws:lambda:ap-southeast-2:336392948345:layer:AWSSDKPandas-Python38:1
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+  events:
+      - schedule: rate(30 minutes) 
+  timeout: 540 
+
+analytica-write-db-lambda-function:
+  handler: src/api/ui/analytica/write_db.handler
+  description: Save data after transformation from extend API analytica into DataUI system
+  layers:
+    - arn:aws:lambda:ap-southeast-2:336392948345:layer:AWSSDKPandas-Python38:1
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-pytz:3 
+  vpc:
+    securityGroupIds:
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_GROUP}
+    subnetIds:
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_SUBNET1}
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_SUBNET2}
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_SUBNET3} 
+  timeout: 540
+  events:
+    - s3:
+        bucket: ${file(config/${self:service}-${self:provider.stage}.json):DATAUI_LAB_FILES_STORAGE}
+        event: s3:ObjectCreated:*
+        existing: true
+        forceDeploy: true

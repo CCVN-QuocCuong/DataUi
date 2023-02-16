@@ -1,0 +1,701 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Defence in depth with AWS WAF Managed Rules.
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      -
+        Label:
+          default: "dataui Network AWS WAF WebACL Name"
+        Parameters:
+          - EdgeNetworkWebACLNameParam
+      -
+        Label:
+          default: "Public Layer AWS WAF WebACL Name"
+        Parameters:
+          - ApplicationWebACLNameParam
+      -
+        Label:
+          default: "Edge Network AWS Managed Rule Controls"
+        Parameters:
+          - HTTPGetFloodRateParam
+          - HTTPPostFloodRateParam
+          - HTTPPostLoginParam
+          - AMRCommonRuleSetExcludedRules
+          - AMRAdminProtectionExcludedRules
+          - AMRKnownBadInputsExcludedRules
+      -
+        Label:
+          default: "Public Layer AWS Managed Rule Controls"
+        Parameters:
+          - AMRWordPressRuleSetExcludedRules
+          - AMRPHPRuleSetExcludedRules
+          - AMRUnixRuleSetExcludedRules
+          - AMRLinuxRuleSetExcludedRules
+          - AMRSQLiRuleSetExcludedRules
+    ParameterLabels:
+      EdgeNetworkWebACLNameParam:
+        default: "Web ACL Name"
+      AMRCommonRuleSetExcludedRules:
+        default: "AWSManagedRuleCommonRuleSet"
+      ApplicationWebACLNameParam:
+        default: "Web ACL Name"
+      HTTPGetFloodRateParam:
+       default: "HTTP Get Flood Protection"
+      HTTPPostFloodRateParam:
+       default: "HTTP Post Flood Protection"
+      HTTPPostLoginParam:
+       default: "Login URL"        
+Parameters:
+  Project:
+    Description: name of Project
+    Type: String
+    Default: dataui
+  Environment:
+    Description: environment name of project 
+    Type: String
+    Default: test  
+  EdgeNetworkWebACLNameParam:
+    Description: "AWS WAF WebACL Name that would be accosiated to an Amazon CloudFront distribution"
+    Type: String
+    Default: network-layer-webacl
+  AMRCommonRuleSetExcludedRules:
+    Description: "By default all rules are set to count mode during an evaluation period. If you want rules to be fully enforced at deployment remove selected or all default inputs."
+    Type: CommaDelimitedList
+    Default: NoUserAgent_HEADER, UserAgent_BadBots_HEADER, SizeRestrictions_QUERYSTRING, SizeRestrictions_Cookie_HEADER, SizeRestrictions_BODY, SizeRestrictions_URIPATH, EC2MetaDataSSRF_BODY, EC2MetaDataSSRF_COOKIE, EC2MetaDataSSRF_URIPATH, EC2MetaDataSSRF_QUERYARGUMENTS, GenericLFI_QUERYARGUMENTS, GenericLFI_URIPATH, GenericLFI_BODY, RestrictedExtensions_URIPATH, RestrictedExtensions_QUERYARGUMENTS, GenericRFI_QUERYARGUMENTS, GenericRFI_BODY, GenericRFI_URIPATH, CrossSiteScripting_COOKIE, CrossSiteScripting_QUERYARGUMENTS, CrossSiteScripting_BODY, CrossSiteScripting_URIPATH
+  AMRAdminProtectionExcludedRules:
+    Description: "By default all rules are set to count mode during an evaluation period. If you want rules to be fully enforced at deployment remove selected or all default inputs."
+    Type: CommaDelimitedList
+    Default: AdminProtection_URIPATH
+  AMRKnownBadInputsExcludedRules:
+    Description: "By default all rules are set to count mode during an evaluation period. If you want rules to be fully enforced at deployment remove selected or all default inputs."
+    Type: CommaDelimitedList
+    Default: Host_localhost_HEADER, PROPFIND_METHOD, ExploitablePaths_URIPATH, BadAuthToken_COOKIE_AUTHORIZATION
+  ApplicationWebACLNameParam:
+    Description: "AWS WAF WebACL name that would be accosiated to an Application Load Balancer"
+    Type: String
+    Default: application-layer-webacl
+  AMRWordPressRuleSetExcludedRules:
+    Description: "By default all rules are set to count mode during an evaluation period. If you want rules to be fully enforced at deployment remove selected or all default inputs."
+    Type: CommaDelimitedList
+    Default: WordPressExploitablePaths_URIPATH
+  AMRPHPRuleSetExcludedRules:
+    Description: "By default all rules are set to count mode during an evaluation period. If you want rules to be fully enforced at deployment remove selected or all default inputs."
+    Type: CommaDelimitedList
+    Default: PHPHighRiskMethodsVariables_QUERYARGUMENTS, PHPHighRiskMethodsVariables_BODY
+  AMRUnixRuleSetExcludedRules:
+    Description: "By default all rules are set to count mode during an evaluation period. If you want rules to be fully enforced at deployment remove selected or all default inputs."
+    Type: CommaDelimitedList
+    Default: UNIXShellCommandsVariables_QUERYARGUMENTS, UNIXShellCommandsVariables_BODY
+  AMRLinuxRuleSetExcludedRules:
+    Description: "By default all rules are set to count mode during an evaluation period. If you want rules to be fully enforced at deployment remove selected or all default inputs."
+    Type: CommaDelimitedList
+    Default: LFI_URIPATH, LFI_QUERYARGUMENTS, LFI_BODY
+  AMRSQLiRuleSetExcludedRules:
+    Description: "By default all rules are set to count mode during an evaluation period. If you want rules to be fully enforced at deployment remove selected or all default inputs."
+    Type: CommaDelimitedList
+    Default: SQLiExtendedPatterns_QUERYARGUMENTS, SQLi_QUERYARGUMENTS, SQLi_BODY, SQLi_COOKIE, SQLi_URIPATH
+  HTTPGetFloodRateParam:
+    Description: "A Rate-Based Rule looking for a maximum rate of a single IP address can perform HTTP Get requests in 5 minutes"
+    Type: Number
+    Default: 10000
+    MinValue: 100
+    MaxValue: 20000000
+  HTTPPostFloodRateParam:
+    Description: "A Rate-Based Rule looking for a maximum rate of a single IP address can perform HTTP Post requests in 5 minutes"
+    Type: Number
+    Default: 1000
+    MinValue: 100
+    MaxValue: 20000000
+  HTTPPostLoginParam:
+    Description: "Enter the URI for a Login page to rate-limit IP addresses from login attemps. Leave this blank for universal HTTP Post rate-limit"
+    Type: String
+    Default: login
+  tagName:
+    Type: String
+    Description: Name tag value
+    MinLength: '2'
+    MaxLength: '25'
+    Default: dataui
+  tagNamePrefix:
+    Description: The prefix for use in Name tag values
+    Type: String
+    MinLength: '2'
+    MaxLength: '25'
+    Default: dataui app
+Resources:
+  EdgeLayerWebACL:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      Name: !Sub 
+          - ${Project}-${Environment}-regional-one-webacl
+          - {Project: !Ref Project, EnvironmentId: !Ref Environment}
+      Scope: REGIONAL
+      Description: Edge Network Web ACL using AWS Managed Rules.
+      DefaultAction: 
+        Allow: {}
+      VisibilityConfig:
+        SampledRequestsEnabled: true
+        CloudWatchMetricsEnabled: true
+        MetricName: !Join
+            - ""
+            - - !Ref EdgeNetworkWebACLNameParam
+              - "Metric"
+      Tags:
+        - Key: Layer
+          Value: EdgeNetwork
+      Rules: 
+        - Name: HTTPGetFloodPProtection
+          Priority: 0
+          Action:
+            Block: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: RateBased
+          Statement:
+            RateBasedStatement:
+              Limit: !Ref HTTPGetFloodRateParam
+              AggregateKeyType: IP
+              ScopeDownStatement:
+                ByteMatchStatement:
+                  SearchString: get
+                  FieldToMatch:
+                    Method: {}
+                  TextTransformations:
+                  - Priority: 0
+                    Type: LOWERCASE
+                  PositionalConstraint: EXACTLY
+        - Name: HTTPPostFloodPProtection
+          Priority: 1
+          Action:
+            Block: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: test
+          Statement:
+            RateBasedStatement:
+              Limit: !Ref HTTPPostFloodRateParam
+              AggregateKeyType: IP
+              ScopeDownStatement:
+                AndStatement:
+                  Statements:
+                  - ByteMatchStatement:
+                      SearchString: !Ref HTTPPostLoginParam 
+                      FieldToMatch:
+                        UriPath: {}
+                      TextTransformations:
+                      - Priority: 0
+                        Type: LOWERCASE
+                      - Priority: 1
+                        Type: URL_DECODE
+                      PositionalConstraint: CONTAINS
+                  - ByteMatchStatement:
+                      SearchString: post
+                      FieldToMatch:
+                        Method: {}
+                      TextTransformations:
+                      - Priority: 0
+                        Type: LOWERCASE
+                      PositionalConstraint: EXACTLY
+        - Name: AWS-AWSManagedRulesAmazonIpReputationList
+          Priority: 2
+          OverrideAction:
+            Count: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRIPRepList
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesAmazonIpReputationList
+        - Name: AWS-AWSManagedRulesAnonymousIpList
+          Priority: 3
+          OverrideAction:
+            Count: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRAnonIpList
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesAnonymousIpList
+        - Name: AWS-AWSManagedRulesCommonRuleSet
+          Priority: 4
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRCRS
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesCommonRuleSet 
+              ExcludedRules: !Ref AMRCommonRuleSetExcludedRules
+        - Name: AWS-AWSManagedRulesKnownBadInputsRuleSet
+          Priority: 5
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRKnownBadInputs
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesKnownBadInputsRuleSet 
+              ExcludedRules: !Ref AMRKnownBadInputsExcludedRules
+        - Name: AWS-AWSManagedRulesAdminProtectionRuleSet
+          Priority: 6
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRAdminProtection
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesAdminProtectionRuleSet
+              ExcludedRules: !Ref AMRAdminProtectionExcludedRules
+        - Name: GeoRestriction
+          Priority: 7
+          Action:
+            Block: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: GeoBlock  
+          Statement:
+            NotStatement:
+              Statement:
+                GeoMatchStatement:
+                    CountryCodes:
+                     - NZ
+                     - AU      
+                     - VN
+  RegexPatternSetOne:
+    Type: AWS::WAFv2::RegexPatternSet
+    Properties:
+      Name: !Sub 
+          - ${Project}-${Environment}-${EdgeNetworkWebACLNameParam}-regex-set-one
+          - {Project: !Ref Project, EnvironmentId: !Ref Environment, EdgeNetworkWebACLNameParam: !Ref EdgeNetworkWebACLNameParam}
+      Scope: REGIONAL
+      Description: This is an example RegexPatternSet
+      RegularExpressionList:
+        - ^foobar$
+        - ^example$            
+  IPSetOne:
+      Type: 'AWS::WAFv2::IPSet'
+      Properties:
+        Description: SampleIPSet
+        Name: !Sub 
+          - ${Project}-${Environment}-${EdgeNetworkWebACLNameParam}-ipsetone
+          - {Project: !Ref Project, EnvironmentId: !Ref Environment, EdgeNetworkWebACLNameParam: !Ref EdgeNetworkWebACLNameParam}
+        Scope: REGIONAL
+        IPAddressVersion: IPV4  
+        Addresses:
+          - 1.2.1.1/32            
+  SampleRuleGroupOne:
+      Type: 'AWS::WAFv2::RuleGroup'
+      Properties:
+        Name: !Ref EdgeNetworkWebACLNameParam 
+        Scope: REGIONAL
+        Description: Rule Group one
+        VisibilityConfig:
+          SampledRequestsEnabled: true
+          CloudWatchMetricsEnabled: true
+          MetricName: sample-RuleGroupMetrics
+        CustomResponseBodies:
+          CustomResponseBodyKey1:
+            ContentType: TEXT_PLAIN
+            Content: this is a plain text
+          CustomResponseBodyKey2:
+            ContentType: APPLICATION_JSON
+            Content: '{"jsonfieldname": "jsonfieldvalue"}'
+          CustomResponseBodyKey3:
+            ContentType: TEXT_HTML
+            Content: <html>HTML text content</html>
+        Capacity: 1000
+        Rules:
+          - Name: RuleOne
+            Priority: 1
+            Action:
+              Allow:
+                CustomRequestHandling:
+                  InsertHeaders:
+                    - Name: AllowActionHeader1Name
+                      Value: AllowActionHeader1Value
+                    - Name: AllowActionHeader2Name
+                      Value: AllowActionHeader2Value
+            VisibilityConfig:
+              SampledRequestsEnabled: true
+              CloudWatchMetricsEnabled: true
+              MetricName: RuleOneMetric
+            Statement:
+              ByteMatchStatement:
+                FieldToMatch:
+                  AllQueryArguments: {}
+                PositionalConstraint: CONTAINS
+                SearchString: testagent
+                TextTransformations:
+                  - Priority: 1
+                    Type: HTML_ENTITY_DECODE
+          - Name: RuleTwo
+            Priority: 2
+            Action:
+              Block:
+                CustomResponse:
+                  ResponseCode: 503
+                  CustomResponseBodyKey: CustomResponseBodyKey1
+                  ResponseHeaders:
+                    - Name: BlockActionHeader1Name
+                      Value: BlockActionHeader1Value
+                    - Name: BlockActionHeader2Name
+                      Value: BlockActionHeader2Value
+            VisibilityConfig:
+              SampledRequestsEnabled: true
+              CloudWatchMetricsEnabled: true
+              MetricName: RuleTwoMetric
+            Statement:
+              ByteMatchStatement:
+                FieldToMatch:
+                  SingleHeader:
+                    Name: haystack
+                PositionalConstraint: CONTAINS
+                SearchString: badbot
+                TextTransformations:
+                  - Priority: 0
+                    Type: NONE
+          - Name: RuleThree
+            Priority: 3
+            Action:
+              Count:
+                CustomRequestHandling:
+                  InsertHeaders:
+                    - Name: CountActionHeader1Name
+                      Value: CountActionHeader1Value
+                    - Name: CountActionHeader2Name
+                      Value: CountActionHeader2Value
+            VisibilityConfig:
+              SampledRequestsEnabled: true
+              CloudWatchMetricsEnabled: true
+              MetricName: RuleThreeMetric
+            Statement:
+              ByteMatchStatement:
+                FieldToMatch:
+                  Body: {}
+                PositionalConstraint: CONTAINS
+                SearchString: RegionOne
+                TextTransformations:
+                  - Priority: 0
+                    Type: HTML_ENTITY_DECODE
+          - Name: RuleFour
+            Priority: 4
+            Action:
+              Allow: {}
+            VisibilityConfig:
+              SampledRequestsEnabled: true
+              CloudWatchMetricsEnabled: true
+              MetricName: RuleFourMetric
+            Statement:
+              SizeConstraintStatement:
+                ComparisonOperator: GT
+                Size: 1000
+                FieldToMatch:
+                  UriPath: {}
+                TextTransformations:
+                  - Priority: 0
+                    Type: NONE             
+  cloudwatchLogsGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName:
+        Fn::Sub: aws-waf-logs-${tagNamePrefix}-web-logGroup
+      RetentionInDays: 180            
+  EdgeLayerWebACLlogging:
+    Type: AWS::WAFv2::LoggingConfiguration
+    Properties:
+      ResourceArn:
+        Fn::GetAtt:
+        - EdgeLayerWebACL
+        - Arn
+      LogDestinationConfigs:
+      - Fn::Sub: arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:aws-waf-logs-${tagNamePrefix}-web-logGroup
+      LoggingFilter:
+        DefaultBehavior: KEEP
+        Filters:
+        - Behavior: KEEP
+          Conditions:
+          - ActionCondition:
+              Action: BLOCK
+          Requirement: MEETS_ANY
+      RedactedFields:
+      - SingleHeader:
+          Name: password                                           
+  PublicApplicationLayerWebACL:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      Name: !Sub 
+          - ${Project}-${Environment}-regional-two-webacl
+          - {Project: !Ref Project, EnvironmentId: !Ref Environment}
+      Scope: REGIONAL
+      Description: Public Application Network Web ACL using AWS Managed Rules.
+      DefaultAction: 
+        Allow: {}
+      VisibilityConfig:
+        SampledRequestsEnabled: true
+        CloudWatchMetricsEnabled: true
+        MetricName: !Join
+            - ""
+            - - !Ref ApplicationWebACLNameParam
+              - "Metric"
+      Tags:
+        - Key: Layer
+          Value: Application
+      Rules: 
+        - Name: AWS-AWSManagedRulesSQLiRuleSet
+          Priority: 0
+          OverrideAction: 
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRSQLi
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesSQLiRuleSet
+              ExcludedRules: !Ref AMRSQLiRuleSetExcludedRules
+        - Name: AWS-AWSManagedRulesLinuxRuleSet
+          Priority: 1
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRLinux
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesLinuxRuleSet 
+              ExcludedRules: !Ref AMRLinuxRuleSetExcludedRules
+        - Name: AWS-AWSManagedRulesUnixRuleSet
+          Priority: 2
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRUnix
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesUnixRuleSet
+              ExcludedRules: !Ref AMRUnixRuleSetExcludedRules
+        - Name: AWS-AWSManagedRulesPHPRuleSet
+          Priority: 3
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRPHP
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesPHPRuleSet 
+              ExcludedRules: !Ref AMRPHPRuleSetExcludedRules
+        - Name: AWS-AWSManagedRulesWordPressRuleSet
+          Priority: 4
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: MetricForAMRWordPress
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesWordPressRuleSet
+              ExcludedRules: !Ref AMRWordPressRuleSetExcludedRules
+        - Name: GeoRestriction
+          Priority: 5
+          Action:
+            Block: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: GeoBlock  
+          Statement:
+            NotStatement:
+              Statement:
+                GeoMatchStatement:
+                    CountryCodes:
+                     - NZ
+                     - AU      
+                     - VN
+  RegexPatternSetTwo:
+    Type: AWS::WAFv2::RegexPatternSet
+    Properties:
+      Name: !Sub 
+          - ${Project}-${Environment}-${ApplicationWebACLNameParam}-regex-set-two
+          - {Project: !Ref Project, EnvironmentId: !Ref Environment, ApplicationWebACLNameParam: !Ref ApplicationWebACLNameParam}
+      Scope: REGIONAL
+      Description: This is an example RegexPatternSet
+      RegularExpressionList:
+        - ^foobar$
+        - ^example$            
+  IPSetTwo:
+      Type: 'AWS::WAFv2::IPSet'
+      Properties:
+        Description: SampleIPSet
+        Name: !Sub 
+          - ${Project}-${Environment}-${ApplicationWebACLNameParam}-ipsettwo
+          - {Project: !Ref Project, EnvironmentId: !Ref Environment, ApplicationWebACLNameParam: !Ref ApplicationWebACLNameParam}
+        Scope: REGIONAL
+        IPAddressVersion: IPV4  
+        Addresses:
+          - 1.2.1.1/32           
+  SampleRuleGroupTwo:
+      Type: 'AWS::WAFv2::RuleGroup'
+      Properties:
+        Name: !Ref ApplicationWebACLNameParam
+        Scope: REGIONAL
+        Description: Rule Group Two
+        VisibilityConfig:
+          SampledRequestsEnabled: true
+          CloudWatchMetricsEnabled: true
+          MetricName: sample-RuleGroupMetrics
+        CustomResponseBodies:
+          CustomResponseBodyKey1:
+            ContentType: TEXT_PLAIN
+            Content: this is a plain text
+          CustomResponseBodyKey2:
+            ContentType: APPLICATION_JSON
+            Content: '{"jsonfieldname": "jsonfieldvalue"}'
+          CustomResponseBodyKey3:
+            ContentType: TEXT_HTML
+            Content: <html>HTML text content</html>
+        Capacity: 1000
+        Rules:
+          - Name: RuleOne
+            Priority: 1
+            Action:
+              Allow:
+                CustomRequestHandling:
+                  InsertHeaders:
+                    - Name: AllowActionHeader1Name
+                      Value: AllowActionHeader1Value
+                    - Name: AllowActionHeader2Name
+                      Value: AllowActionHeader2Value
+            VisibilityConfig:
+              SampledRequestsEnabled: true
+              CloudWatchMetricsEnabled: true
+              MetricName: RuleOneMetric
+            Statement:
+              ByteMatchStatement:
+                FieldToMatch:
+                  AllQueryArguments: {}
+                PositionalConstraint: CONTAINS
+                SearchString: testagent
+                TextTransformations:
+                  - Priority: 1
+                    Type: HTML_ENTITY_DECODE
+          - Name: RuleTwo
+            Priority: 2
+            Action:
+              Block:
+                CustomResponse:
+                  ResponseCode: 503
+                  CustomResponseBodyKey: CustomResponseBodyKey1
+                  ResponseHeaders:
+                    - Name: BlockActionHeader1Name
+                      Value: BlockActionHeader1Value
+                    - Name: BlockActionHeader2Name
+                      Value: BlockActionHeader2Value
+            VisibilityConfig:
+              SampledRequestsEnabled: true
+              CloudWatchMetricsEnabled: true
+              MetricName: RuleTwoMetric
+            Statement:
+              ByteMatchStatement:
+                FieldToMatch:
+                  SingleHeader:
+                    Name: haystack
+                PositionalConstraint: CONTAINS
+                SearchString: badbot
+                TextTransformations:
+                  - Priority: 0
+                    Type: NONE
+          - Name: RuleThree
+            Priority: 3
+            Action:
+              Count:
+                CustomRequestHandling:
+                  InsertHeaders:
+                    - Name: CountActionHeader1Name
+                      Value: CountActionHeader1Value
+                    - Name: CountActionHeader2Name
+                      Value: CountActionHeader2Value
+            VisibilityConfig:
+              SampledRequestsEnabled: true
+              CloudWatchMetricsEnabled: true
+              MetricName: RuleThreeMetric
+            Statement:
+              ByteMatchStatement:
+                FieldToMatch:
+                  Body: {}
+                PositionalConstraint: CONTAINS
+                SearchString: RegionOne
+                TextTransformations:
+                  - Priority: 0
+                    Type: HTML_ENTITY_DECODE
+          - Name: RuleFour
+            Priority: 4
+            Action:
+              Allow: {}
+            VisibilityConfig:
+              SampledRequestsEnabled: true
+              CloudWatchMetricsEnabled: true
+              MetricName: RuleFourMetric
+            Statement:
+              SizeConstraintStatement:
+                ComparisonOperator: GT
+                Size: 1000
+                FieldToMatch:
+                  UriPath: {}
+                TextTransformations:
+                  - Priority: 0
+                    Type: NONE            
+  cloudwatchLogsGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName:
+        Fn::Sub: aws-waf-logs-${tagNamePrefix}-web-logGroup
+      RetentionInDays: 180            
+  PublicApplicationLayerWebACLlogging:
+    Type: AWS::WAFv2::LoggingConfiguration
+    Properties:
+      ResourceArn:
+        Fn::GetAtt:
+        - PublicApplicationLayerWebACL
+        - Arn
+      LogDestinationConfigs:
+      - Fn::Sub: arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:aws-waf-logs-${tagNamePrefix}-web-logGroup
+      LoggingFilter:
+        DefaultBehavior: KEEP
+        Filters:
+        - Behavior: KEEP
+          Conditions:
+          - ActionCondition:
+              Action: BLOCK
+          Requirement: MEETS_ANY
+      RedactedFields:
+      - SingleHeader:
+          Name: password            
+          

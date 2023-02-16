@@ -1,0 +1,173 @@
+get-sample-list-lambda-function:
+  handler: src/api/ui/sample/list.handler
+  events:
+    - http:
+        path: samples
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+get-samples-generated-lambda-function:
+  handler: src/api/ui/sample/list_generated.handler
+  events:
+    - http:
+        path: samples/generated
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+filter-sample-list-by-params-lambda-function:
+  handler: src/api/ui/sample/filter.handler
+  events:
+    - http:
+        path: samples/search
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+get-sample-detail-lambda-function:
+  handler: src/api/ui/sample/get.handler
+  events:
+    - http:
+        path: sample
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+update-sample-detail-lambda-function:
+  handler: src/api/ui/sample/update.handler
+  events:
+    - http:
+        path: sample
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+assign-testtype-to-sample-lambda-function:
+  handler: src/api/ui/sample/assign_testtype.handler
+  events:
+    - http:
+        path: sample/assign
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+search-sample-list-by-params-lambda-function:
+  handler: src/api/ui/sample/search.handler
+  events:
+    - http:
+        path: samples/filter
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+get-sample-names-lambda-function:
+  handler: src/api/ui/sample/get_names.handler
+  events:
+    - http:
+        path: samples/names
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1

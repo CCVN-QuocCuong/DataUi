@@ -1,0 +1,21 @@
+hilltrans-lambda-function:
+    handler: src/api/ui/hill_lab/hill.handler
+    vpc: ~
+    events:
+    - http:
+        path: coc/{id}/{filename}/transfers
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+    description: transforming csv and store to S3 dataui bucket with new structure
+    layers:
+      - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-pandas:4
+    timeout: 540

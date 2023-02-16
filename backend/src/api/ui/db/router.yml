@@ -1,0 +1,79 @@
+execute-select-query-db-lambda-function:
+  handler: src/api/ui/db/select.handler
+  events:
+    - http:
+        path: select
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+execute-delete-record-db-lambda-function:
+  handler: src/api/ui/db/delete.handler
+  events:
+    - http:
+        path: delete
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+execute-insert-record-db-lambda-function:
+  handler: src/api/ui/db/insert.handler
+  events:
+    - http:
+        path: insert
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+execute-export-query-db-lambda-function:
+  handler: src/api/ui/db/export.handler
+  events:
+    - http:
+        path: export
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1

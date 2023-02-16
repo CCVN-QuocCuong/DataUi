@@ -1,0 +1,153 @@
+upload-file-lambda-function:
+  handler: src/api/ui/file/upload.handler
+  events:
+    - http:
+        path: coc/upload-file-url
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+upload-file-non-cocid-lambda-function:
+  handler: src/api/ui/file/upload_non_cocid.handler
+  events:
+    - http:
+        path: noncoc/upload-file-url
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer } 
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+    
+download-file-lambda-function:
+  handler: src/api/ui/file/download.handler
+  events:
+    - http:
+        path: coc/{id}/{filename}
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+download-file-non-cocid-lambda-function:
+  handler: src/api/ui/file/download_non_cocid.handler
+  events:
+    - http:
+        path: noncoc/download/{id}
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+list-all-files-non-cocid-lambda-function:
+  handler: src/api/ui/file/list_all_non_cocid.handler
+  events:
+    - http:
+        path: noncoc/files
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+delete-file-by-cocid-lambda-function:
+  handler: src/api/ui/file/delete_by_cocid.handler
+  events:
+    - http:
+        path: coc/{id}/{filename}
+        method: delete
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+delete-file-non-cocid-lambda-function:
+  handler: src/api/ui/file/delete_non_cocid.handler
+  events:
+    - http:
+        path: noncoc/{id}
+        method: delete
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1

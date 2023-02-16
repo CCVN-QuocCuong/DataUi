@@ -1,21 +1,39 @@
-# Welcome to your new Data UI app!
+# Welcome to your new Environmental Data UI Repository !
+## Repository contains source code of 3 main components:
+- Infrastructure: Contains the initial AWS environment architecture build definition (VPC, Cognito, S3, RDS ...)
+- backend: Contains the definition of the DataUI project's backend API. Built in Python language (version 3.8) on Serverless platform supporting development and deployment on AWS environment.
+- frontend-ui: Contains the definition of UI part of DataUI project. Built in ReactJs language
 
 ## Tech Stack
 
-Data UI apps include the following rock-solid technical decisions out of the box:
+Environmental Data UI Infrastructure include the following rock-solid technical decisions out of the box:
+###  Environmental Data UI backend
+- Serverless Framework (https://www.serverless.com/)
+- Python 3.8.0 (https://www.python.org/downloads/release/python-380/)
+- cognitojwt: Decode and verify Amazon Cognito JWT tokens (https://pypi.org/project/cognitojwt/)
+- requests: Requests allows you to send HTTP/1.1 requests extremely easily. (https://pypi.org/project/requests)
+- aiohttp: Supports both client and server side of HTTP protocol. (https://pypi.org/project/aiohttp/)
+- async_lru: Simple lru cache for asyncio (https://pypi.org/project/async-lru/)
+- pydantic: Data validation and settings management using Python type hints. (https://pypi.org/project/pydantic/)
+- faker: Faker is a Python package that generates fake data for you. (https://pypi.org/project/Faker/)
+- peewee: Peewee is a simple and small ORM. It has few (but expressive) concepts, making it easy to learn and intuitive to use.(http://docs.peewee-orm.com/en/latest/)
+- openpyxl: openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm/xltx/xltm files.(https://pypi.org/project/openpyxl/)
+- ply: PLY is yet another implementation of lex and yacc for Python. (https://pypi.org/project/ply/)
+- python-docx: python-docx is a Python library for creating and updating Microsoft Word (.docx) files.(https://pypi.org/project/python-docx/)
+- botocore: A low-level interface to a growing number of Amazon Web Services. The botocore package is the foundation for the AWS CLI as well as boto3. (https://pypi.org/project/botocore/)
+- psycopg2: Psycopg is the most popular PostgreSQL database adapter for the Python programming language. (https://pypi.org/project/psycopg2/)
+- pandas: pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with "relational" or "labeled" data both easy and intuitive. (https://pypi.org/project/pandas/)
 
-- ReactJS
-- Redux
-- Redux Toolkit
-- TypeScript
-- Local Storage (integrated with MST for restoring state)
-- Session Storage
-- axios (to talk to REST servers)
-- And more!
+###  Environmental Data UI Infrastructure
+- AWSCloudFormation (https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) 
+- YAML language (https://www.redhat.com/en/topics/automation/what-is-yaml)
+
+###  Environmental Data UI frontend-ui 
+
 
 ## Quick Start
 
-The Data UI project's structure will look similar to this:
+The  Environmental Data UI Repository structure will look similar to this:
 
 ```
 📦frontend-ui  
@@ -62,87 +80,77 @@ The Data UI project's structure will look similar to this:
 
 ```
 
-### ./app directory
-
-Included in an Data UI project is the `app` directory. This is a directory you would normally have to create when using vanilla ReactJS.
-
-The inside of the src directory looks similar to the following:
+###  Environmental Data UI backend
+```
+📦backend
+ ┣ 📂.serverless 
+ ┣ 📂config 
+ ┣ 📂layer
+ ┣ 📂resources 
+ ┣ 📂src
+ ┃ ┣ 📂api
+ ┃ ┃ ┣ 📂auth 
+ ┃ ┃ ┗ 📂ui 
+ ┃ ┣ 📂helpers 
+ ┃ ┣ 📂model 
+ ┃ ┗ 📂shared 
+ ┣ 📜package-lock.json
+ ┣ 📜package.json
+ ┣ 📜README.md
+ ┣ 📜serverless-dev.yml
+ ┣ 📜serverless.yml
+ ┗ 📜yarn.lock
+```
+###  Environmental Data UI Infrastructure
 
 ```
- 📂src
- ┣ 📂assets
- ┣ 📂components 
- ┣ 📂constants
- ┣ 📂helpers
- ┣ 📂hooks
- ┣ 📂layouts
- ┣ 📂pages
- ┣ 📂routes 
- ┣ 📂schema 
- ┣ 📂service 
- ┣ 📂store 
- ┣ 📂styles 
- ┣ 📜App.css
- ┣ 📜App.tsx
- ┣ 📜config.js
- ┣ 📜hooks.ts
- ┣ 📜index.js
- ┣ 📜react-app-env.d.ts
- ┣ 📜reportWebVitals.js
- ┣ 📜setupTests.js
- ┗ 📜test.utils.tsx
+📦infrastructure
+ ┣ 📂dataui-cognito 
+ ┣ 📂dataui-rds-backup 
+ ┣ 📂dataui-vpc 
+ ┣ 📂dataui-waf 
+ ┗ 📜README.md
 ```
+###  Environmental Data UI Infrastructure
+```
+📦frontend-ui  
+ ┣ 📂public 
+ ┣ 📂src
+ ┃ ┣ 📂assets
+ ┃ ┃ ┣ 📂css 
+ ┃ ┃ ┣ 📂font 
+ ┃ ┃ ┣ 📂icomoon 
+ ┃ ┃ ┗ 📂images 
+ ┃ ┣ 📂components 
+ ┃ ┣ 📂routes 
+ ┃ ┣ 📂schema 
+ ┃ ┣ 📂service 
+ ┃ ┣ 📂store 
+ ┃ ┣ 📂styles 
+ ┃ ┣ 📜App.css
+ ┃ ┣ 📜App.tsx
+ ┃ ┣ 📜config.js
+ ┃ ┣ 📜hooks.ts
+ ┃ ┣ 📜index.js
+ ┃ ┣ 📜react-app-env.d.ts
+ ┃ ┣ 📜reportWebVitals.js
+ ┃ ┣ 📜setupTests.js
+ ┃ ┗ 📜test.utils.tsx
+ ┣ 📜.env
+ ┣ 📜.env.test
+ ┣ 📜.gitignore
+ ┣ 📜package-lock.json
+ ┣ 📜package.json
+ ┣ 📜README.md
+ ┗ 📜tsconfig.json
+``` 
+  
+## Running Storybook
+###  Environmental Data UI backend
+- Refer to the ```backend\README.md``` for more information 
 
-**assets**
-This is folder containing static files, such as Images, SVG, fonts, and global CSS.
+###  Environmental Data UI Infrastructure
+- Refer to the ```infrastructure\README.md``` for more information 
 
-**components**
-This is where your React components will live. Each component will have a directory containing the `.tsx` file, along with a story file, the App will come with a number of globally shared/reusable components such as layouts (shells) wrap, nav), form element, button.
-
-**constants**
-This is where the constants or strings you define are stored.
-
-**helpers**
-This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truely shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
-
-**hooks**
-The hooks folder contains every single custom hook in your entire project.
-
-**layouts**
-This is a special folder for placing any layout based components. This would be things like a sidebar, navbar, container, etc.
-
-**pages**
-This folder only contains one file per page, files in the pages folder are actually quite simple since they just glue together a few feature components and some general components.
-
-**routes**
-We will use React Router to navigate between components. React Router is a standard library for routing in React. It enables the navigation among views of various components in a React Application, allows changing the browser URL, and keeps the UI in sync with the URL.
-
-**schema**
-All forms in this folder will be loaded to an Graph Database and UI is rendered by formId and form model will be validated on the browser as well as backend APIs.
-
-**service**
-Any services that interface with the outside world will live here (think REST APIs, Push Notifications, etc.).
-
-**store**
-A store holds the whole state tree of your application.
-
-**styles**
-Here lives the theme for your application, including spacing, colors, and typography.
-
-**App.css**
-Here lives the theme including spacing, colors, and typography for `App.tsx` file
-
-**App.tsx**
-This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
-
-**config.js**
-here is the configuration file for your application
-
-**hooks.ts**
-This file imports all directory hooks
-
-**index.js**
-This is the entry point to your app.
-
-**test.utils.tsx**
-This directory will hold your configs and mocks, as well as your test file.
+###  Environmental Data UI front-end
+- Refer to the ```frontend-ui\README.md``` for more information 

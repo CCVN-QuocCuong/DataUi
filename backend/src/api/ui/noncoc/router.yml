@@ -1,0 +1,85 @@
+create-noncoc-form-lambda-function:
+  handler: src/api/ui/noncoc/create.handler
+  events:
+    - http:
+        path: noncoc/{id}/form
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+update-noncoc-form-lambda-function:
+  handler: src/api/ui/noncoc/update.handler
+  events:
+    - http:
+        path: noncoc/{id}/form
+        method: put
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+get-noncoc-form-list-lambda-function:
+  handler: src/api/ui/noncoc/get.handler
+  events:
+    - http:
+        path: noncoc/{id}/form
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+get-noncoc-sample-list-by-fileid-lambda-function:
+  handler: src/api/ui/noncoc/list_all_samples_by_fileid.handler
+  events:
+    - http:
+        path: noncoc/{id}/samples
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1

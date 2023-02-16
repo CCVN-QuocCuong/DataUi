@@ -1,0 +1,115 @@
+filter-photo-list-lambda-function:
+  handler: src/api/ui/photo/filter.handler
+  events:
+    - http:
+        path: photo/search
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+get-photo-list-by-coc-id-lambda-function:
+  handler: src/api/ui/photo/get_by_coc_id.handler
+  events:
+    - http:
+        path: photo/{id}/coc
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+download-photo-list-lambda-function:
+  handler: src/api/ui/photo/download.handler
+  events:
+    - http:
+        path: photo/download
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+  vpc: ~
+  timeout: 540
+
+
+export-docx-photo-list-lambda-function:
+  handler: src/api/ui/photo/export_docx.handler
+  events:
+    - http:
+        path: photo/export_docx
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+  vpc: ~
+  timeout: 540
+ 
+
+search-photo-list-lambda-function:
+  handler: src/api/ui/photo/search.handler
+  events:
+    - http:
+        path: photo/filter
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1

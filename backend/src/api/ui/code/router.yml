@@ -1,0 +1,86 @@
+get-code-list-lambda-function:
+  handler: src/api/ui/code/list.handler
+  events:
+    - http:
+        path: codes
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+get-criterias-lambda-function:
+  handler: src/api/ui/code/get_criterias.handler
+  events:
+    - http:
+        path: criterias
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+get-criterias-by-region-lambda-function:
+  handler: src/api/ui/code/get_criterias_by_region.handler
+  events:
+    - http:
+        path: criterias/region
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+
+get-additional-code-by-region-lambfunc:
+  handler: src/api/ui/code/get_additional_code_by_region.handler
+  events:
+    - http:
+        path: additionalcode/region
+        method: get
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: true
+        authorizer:
+          arn: ${self:provider.environment.COGNITO_USER_POOL_ARN}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1

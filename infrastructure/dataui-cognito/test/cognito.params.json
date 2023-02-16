@@ -1,0 +1,22 @@
+[
+  {
+    "ParameterKey": "Application",
+    "ParameterValue": "dataui"
+  },
+  {
+    "ParameterKey": "Costcenter",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "Platform",
+    "ParameterValue": "aws"
+  },
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "test"
+  },
+  {
+    "ParameterKey": "Project",
+    "ParameterValue": "dataui"
+  }
+]

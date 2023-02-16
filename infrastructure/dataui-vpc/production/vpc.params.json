@@ -1,0 +1,74 @@
+[
+  {
+    "ParameterKey": "Application",
+    "ParameterValue": "dataui"
+  },
+  {
+    "ParameterKey": "Costcenter",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "Platform",
+    "ParameterValue": "aws"
+  },
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "prod"
+  },
+  {
+    "ParameterKey": "Project",
+    "ParameterValue": "dataui"
+  },
+  {
+    "ParameterKey": "VpcCidr",
+    "ParameterValue": "10.100.14.0/23"
+  },
+  {
+    "ParameterKey": "NetSubnetOneCidr",
+    "ParameterValue": "10.100.14.0/27"
+  },
+  {
+    "ParameterKey": "NetSubnetTwoCidr",
+    "ParameterValue": "10.100.14.32/27"
+  },
+  {
+    "ParameterKey": "NetSubnetThreeCidr",
+    "ParameterValue": "10.100.14.64/27"
+  },
+  {
+    "ParameterKey": "DataSubnetOneCidr",
+    "ParameterValue": "10.100.14.96/27"
+  },
+  {
+    "ParameterKey": "DataSubnetTwoCidr",
+    "ParameterValue": "10.100.14.128/27"
+  },
+  {
+    "ParameterKey": "DataSubnetThreeCidr",
+    "ParameterValue": "10.100.14.160/27"
+  },
+  {
+    "ParameterKey": "AppSubnetOneCidr",
+    "ParameterValue": "10.100.14.192/27"
+  },
+  {
+    "ParameterKey": "AppSubnetTwoCidr",
+    "ParameterValue": "10.100.14.224/27"
+  },
+  {
+    "ParameterKey": "AppSubnetThreeCidr",
+    "ParameterValue": "10.100.15.0/27"
+  },
+  {
+    "ParameterKey": "WebSubnetOneCidr",
+    "ParameterValue": "10.100.15.160/27"
+  },
+  {
+    "ParameterKey": "WebSubnetTwoCidr",
+    "ParameterValue": "10.100.15.192/27"
+  },
+  {
+    "ParameterKey": "WebSubnetThreeCidr",
+    "ParameterValue": "10.100.15.224/27"
+  }
+]

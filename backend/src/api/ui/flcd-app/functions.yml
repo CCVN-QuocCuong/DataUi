@@ -1,0 +1,38 @@
+get-flcd-evn-suverys-lambda-function:
+  handler: src/api/ui/flcd-app/get_raw_suverys.handler
+  description: Intergration get raw data from FLCD-ENV application 
+  vpc:
+    securityGroupIds:
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_GROUP}
+    subnetIds:
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_SUBNET1}
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_SUBNET2}
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_SUBNET3}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+  events:
+      - schedule: rate(10 minutes) 
+  timeout: 540
+
+
+transform_surveys-lambda-function:
+  handler: src/api/ui/flcd-app/transform_survey.handler
+  description: An Amazon S3 trigger that retrieves metadata for the object that has been updated.
+  vpc:
+    securityGroupIds:
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_GROUP}
+    subnetIds:
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_SUBNET1}
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_SUBNET2}
+      - ${file(config/${self:service}-${self:provider.stage}.json):SECURITY_SUBNET3}
+  layers:
+    - { Ref: DependenciesLambdaLayer }
+    - arn:aws:lambda:ap-southeast-2:770693421928:layer:Klayers-p38-aws-psycopg2:1
+  timeout: 600
+  events:
+    - s3:
+        bucket: ${file(config/${self:service}-${self:provider.stage}.json):DATAUI_FILES_STORAGE}
+        event: s3:ObjectCreated:*
+        existing: true
+        forceDeploy: true

@@ -1,0 +1,2 @@
+#!/bin/bash
+aws --profile default cloudformation $1 --cli-input-json file://$3/stack-name.json --template-body file://vpc.yml --parameters file://$3/vpc.params.json --region $2 --capabilities CAPABILITY_NAMED_IAM

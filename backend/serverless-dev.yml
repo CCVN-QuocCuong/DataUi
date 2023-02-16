@@ -1,0 +1,90 @@
+service: dataui-api
+plugins:
+  - serverless-offline
+  - serverless-plugin-split-stacks
+frameworkVersion: ">=2.24.0"
+
+custom:
+  profile:
+    dev: "default"   
+  splitStacks:
+    perFunction: false
+    perType: true
+    perGroupFunction: false
+    nestedStackCount: 20 
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: "${opt:stage, 'dev'}"
+  region: "${opt:region, 'ap-southeast-2'}"
+  profile: "${self:custom.profile.${self:provider.stage}}" 
+  environment:
+    REGION: ${self:provider.region}
+    COGNITO_USER_POOL_ARN: ${file(config/dataui-api-dev.json):COGNITO_USER_POOL_ARN}
+    COGNITO_USER_POOL_ID: ${file(config/dataui-api-dev.json):COGNITO_USER_POOL_ID}
+    COGNITO_USER_CLIENT_ID: ${file(config/dataui-api-dev.json):COGNITO_USER_CLIENT_ID}
+    LAMBDA_PREFIX: dataui-api-dev
+    DB_HOST: ${file(config/dataui-api-dev.json):DB_HOST}
+    DB_NAME: ${file(config/dataui-api-dev.json):DB_NAME}
+    SECRET_NAME: ${file(config/dataui-api-dev.json):SECRET_NAME}  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - cognito-idp:AdminInitiateAuth
+            - cognito-idp:AdminCreateUser
+            - cognito-idp:AdminSetUserPassword
+            - cognito-idp:ChangePassword
+            - cognito-idp:AdminRespondToAuthChallenge
+            - cognito-idp:ForgotPassword
+            - cognito-idp:ConfirmForgotPassword
+            - lambda:InvokeFunction
+            - lambda:InvokeAsync
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - s3:GetObject
+            - s3:PutObject
+          Resource: "arn:aws:s3:::data-ui-${self:provider.stage}-files-storage/*"
+  stackName: "data-ui-${self:provider.stage}-backend-cf"
+  stackTags:
+    application: ${self:service}
+    environment: ${self:provider.stage}
+    name: "dataui-api-dev-backend-cf"
+    platform: "aws"  
+  vpc:
+    securityGroupIds:
+      - ${file(config/dataui-api-dev.json):SECURITY_GROUP} 
+    subnetIds:
+      - ${file(config/dataui-api-dev.json):SECURITY_SUBNET1}
+      - ${file(config/dataui-api-dev.json):SECURITY_SUBNET2}
+      - ${file(config/dataui-api-dev.json):SECURITY_SUBNET3}
+
+functions:
+  - ${file(src/api/ui/db/router.yml)}
+  - ${file(src/api/ui/ui/coc/router.yml)}
+  - ${file(src/api/ui/coc/router.yml)}
+  - ${file(src/api/ui/ui/sample/router.yml)}
+  - ${file(src/api/ui/sample/router.yml)}
+  - ${file(src/api/ui/ui/testtype/router.yml)}
+  - ${file(src/api/ui/testtype/router.yml)}
+  - ${file(src/api/ui/code/router.yml)}
+  - ${file(src/helpers/functions.yml)}
+  - ${file(src/api/auth/router.yml)}
+  - ${file(src/api/ui/file/router.yml)}
+
+resources:
+  - ${file(resources/api-gateway-errors.yml)}
+
+layers:
+  dependencies:
+    path: layer/dependencies
+    compatibleRuntimes:
+      - python3.8
+    description: "Dependencies for python functions"
+
+package:
+  exclude:
+    - node_modules/**

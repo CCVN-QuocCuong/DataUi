@@ -1,0 +1,58 @@
+image: node:14
+
+definitions:
+  steps:
+    - step: &install-and-deploy-frontend-ui
+        name: Install package and deploy frontend-ui to dev env
+        condition:
+          changesets:
+            includedPaths:
+              - "frontend-ui/**"
+        caches:
+          - node
+          - pip
+        script:
+          - cd frontend-ui
+          - npm install
+          - npm run build
+          - apt-get update && apt-get install -y python3.8 
+          - pip install awscli
+          - export AWS_ACCESS_KEY=$AWS_ACCESS_KEY
+          - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+          - if [ "$AWS_SESSION_TOKEN" != "" ]; then export AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN; fi
+          - aws s3 sync build/ s3://odc1-data-ui-dev
+    - step: &install-and-deploy-backend
+        name: Install package and deploy backend to dev env
+        condition:
+          changesets:
+            includedPaths:
+              - "backend/**"
+        caches:
+          - pip
+          - node
+        script:
+          - apt-get update && apt-get install -y python3.8
+          - cd backend/layer/dependencies
+          - pip install -t python/lib/python3.8/site-packages -r requirements.txt
+          - cd ../..
+          - npm install -g serverless
+          - serverless config credentials --provider aws --key $AWS_ACCESS_KEY --secret $AWS_SECRET_ACCESS_KEY --profile dataui-rest-api-dev --overwrite
+          - sls deploy --stage dev --region ap-southeast-2 -c serverless.yml
+clone:
+  depth: full
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          <<: *install-and-deploy-frontend-ui
+          name: Deploy frontend-ui to dev
+          deployment: pipeline
+      - step:
+          <<: *install-and-deploy-frontend-admin
+          name: Deploy frontend-admin to dev
+          deployment: pipeline
+      - step:
+          <<: *install-and-deploy-backend
+          name: Deploy backend to dev
+          deployment: pipeline

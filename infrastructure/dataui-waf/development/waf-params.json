@@ -1,0 +1,70 @@
+[
+    {
+        "ParameterKey": "Project",
+        "ParameterValue": "dataui-waf"
+    },
+    {
+        "ParameterKey": "Environment",
+        "ParameterValue": "dev"
+    },
+    {
+        "ParameterKey": "EdgeNetworkWebACLNameParam",
+        "ParameterValue": "network-layer-webacl"
+    },
+    {
+        "ParameterKey": "AMRCommonRuleSetExcludedRules",
+        "ParameterValue": "NoUserAgent_HEADER, UserAgent_BadBots_HEADER, SizeRestrictions_QUERYSTRING, SizeRestrictions_Cookie_HEADER, SizeRestrictions_BODY, SizeRestrictions_URIPATH, EC2MetaDataSSRF_BODY, EC2MetaDataSSRF_COOKIE, EC2MetaDataSSRF_URIPATH, EC2MetaDataSSRF_QUERYARGUMENTS, GenericLFI_QUERYARGUMENTS, GenericLFI_URIPATH, GenericLFI_BODY, RestrictedExtensions_URIPATH, RestrictedExtensions_QUERYARGUMENTS, GenericRFI_QUERYARGUMENTS, GenericRFI_BODY, GenericRFI_URIPATH, CrossSiteScripting_COOKIE, CrossSiteScripting_QUERYARGUMENTS, CrossSiteScripting_BODY, CrossSiteScripting_URIPATH"
+    },
+    {
+        "ParameterKey": "AMRAdminProtectionExcludedRules",
+        "ParameterValue": "AdminProtection_URIPATH"
+    },
+    {
+        "ParameterKey": "AMRKnownBadInputsExcludedRules",
+        "ParameterValue": "Host_localhost_HEADER, PROPFIND_METHOD, ExploitablePaths_URIPATH, BadAuthToken_COOKIE_AUTHORIZATION"
+    },
+    {
+        "ParameterKey": "ApplicationWebACLNameParam",
+        "ParameterValue": "application-layer-webacl"
+    },
+    {
+        "ParameterKey": "AMRWordPressRuleSetExcludedRules",
+        "ParameterValue": "WordPressExploitablePaths_URIPATH"
+    },
+    {
+        "ParameterKey": "AMRPHPRuleSetExcludedRules",
+        "ParameterValue": "PHPHighRiskMethodsVariables_QUERYARGUMENTS, PHPHighRiskMethodsVariables_BODY"
+    },
+    {
+        "ParameterKey": "AMRUnixRuleSetExcludedRules",
+        "ParameterValue": "UNIXShellCommandsVariables_QUERYARGUMENTS, UNIXShellCommandsVariables_BODY"
+    },
+    {
+        "ParameterKey": "AMRLinuxRuleSetExcludedRules",
+        "ParameterValue": "LFI_URIPATH, LFI_QUERYARGUMENTS, LFI_BODY"
+    },
+    {
+        "ParameterKey": "AMRSQLiRuleSetExcludedRules",
+        "ParameterValue": "SQLiExtendedPatterns_QUERYARGUMENTS, SQLi_QUERYARGUMENTS, SQLi_BODY, SQLi_COOKIE, SQLi_URIPATH"
+    },
+    {
+        "ParameterKey": "HTTPGetFloodRateParam",
+        "ParameterValue": "10000"
+    },
+    {
+        "ParameterKey": "HTTPPostFloodRateParam",
+        "ParameterValue": "1000"
+    },
+    {
+        "ParameterKey": "HTTPPostLoginParam",
+        "ParameterValue": "login"
+    },
+    {
+        "ParameterKey": "tagName",
+        "ParameterValue": "dataui"
+    },
+    {
+        "ParameterKey": "tagNamePrefix",
+        "ParameterValue": "dataui"
+    }
+]

@@ -1,0 +1,17 @@
+{
+  "name": "digga-rest-api",
+  "version": "1.0.0",
+  "description": "Serverless CRUD service exposing a REST HTTP interface",
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-layers": "^2.5.4",
+    "serverless-offline": "^8.8.0",
+    "serverless-plugin-split-stacks": "^1.11.3",
+    "serverless-python-requirements": "^5.4.0"
+  },
+  "dependencies": {
+    "serverless-plugin-resource-tagging": "^1.2.0"
+  }
+}
